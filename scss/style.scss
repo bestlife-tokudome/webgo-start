@@ -75,7 +75,33 @@ img {
 /*--------------------------------
 テーブル
 ---------------------------------*/
+.table {
+    width: 100%;
+    font-size: 15px;
+    border-collapse: collapse;
+    border-spacing: 0;
 
+    tr {
+        border-bottom: solid 1px #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 30px;
+    }
+
+    th {
+        width: 20%;
+    }
+
+    p:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    ul {
+        margin-left: 20px;
+    }
+}
 
 /*----------------------
 ヘッダー
@@ -338,6 +364,25 @@ img {
         a {
             color: $color_link;
         }
+    }
+}
+
+/*----------------------
+会社概要
+-----------------------*/
+.company-info {
+    &__table {
+        margin-bottom: 50px;
+    }
+
+    &__map iframe {
+        height: 400px;
+    }
+
+    &__map-link {
+        font-size: 14px;
+        text-align: right;
+        margin-top: 20px;
     }
 }
 
