@@ -269,6 +269,79 @@ img {
 }
 
 /*----------------------
+下層ページ共通ページヘッダー
+-----------------------*/
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
+    background-image: url("../img/pc_header.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &__title-area {
+        color: #ffffff;
+        text-align: center;
+    }
+
+    &__title {
+        font-size: $font-size_heading;
+        font-weight: bold;
+        line-height: 1;
+        letter-spacing: 0.1em;
+    }
+}
+
+/*----------------------
+メッセージ
+-----------------------*/
+.message {
+    max-width: 850px;
+    margin: 0 auto;
+
+    &__title {
+        font-size: $font-size_heading;
+        font-weight: bold;
+        line-height: 1.5;
+        letter-spacing: 0.05em;
+        color: $color_main;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    &__subtitle {
+        font-size: 18px;
+        line-height: 1.6;
+        letter-spacing: 0.05em;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+}
+
+.ceo-message {
+    &__img-wrapper {
+        width: 100px;
+        margin: 0 25px 15px 0;
+        float: left;
+    }
+
+    &__image {
+        border-radius: 50%;
+    }
+
+    &__text {
+        line-height: 1.6;
+        letter-spacing: 0.05em;
+
+        a {
+            color: $color_link;
+        }
+    }
+}
+
+/*----------------------
 フッター
 -----------------------*/
 .footer {
@@ -303,3 +376,4 @@ img {
         text-decoration: none;
     }
 }
+
