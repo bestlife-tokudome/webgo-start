@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+$break-point_sp: 767px;
 $color_main: #dd1b57;
 $color_link: #349bf4;
 $color_text: #333333;
@@ -7,6 +8,12 @@ $color_border: #e8e8e8;
 $box_shadow: 0 3px 21px rgba(0, 0, 0, 0.16);
 $font-size_text: 16px;
 $font-size_heading: 40px;
+
+@mixin media-sp($bp) {
+    @media screen and (max-width: $bp) {
+        @content;
+    }
+}
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -26,6 +33,10 @@ body {
     "Hiragino Sans", Meiryo, sans-serif;
     font-size: $font-size_text;
     color: $color_text;
+
+    @include media-sp($break-point_sp) {
+        font-size: 15px;
+    }
 }
 
 a {
@@ -53,12 +64,21 @@ img {
     max-width: 1170px;
     margin: 0 auto;
     padding: 0 30px;
+
+    @include media-sp($break-point_sp) {
+        padding: 0 20px;
+    }
 }
 
 .content {
     display: grid;
     padding: 60px 0 100px;
     row-gap: 80px;
+
+    @include media-sp($break-point_sp) {
+        padding: 40px 0 60px;
+        row-gap: 50px;
+    }
 }
 
 /*----------------------
@@ -70,16 +90,25 @@ img {
     line-height: 1;
     letter-spacing: 0.05em;
     color: $color_main;
+
+    @include media-sp($break-point_sp) {
+        font-size: 32px;
+    }
 }
 
 /*--------------------------------
 テーブル
 ---------------------------------*/
-.table {
+.table-type01 {
     width: 100%;
     font-size: 15px;
     border-collapse: collapse;
     border-spacing: 0;
+
+    @include media-sp($break-point_sp) {
+        font-size: 14px;
+        line-height: 1.5;
+    }
 
     tr {
         border-bottom: solid 1px #ddd;
@@ -88,10 +117,18 @@ img {
     th, td {
         text-align: left;
         padding: 30px;
+
+        @include media-sp($break-point_sp) {
+            padding: 20px 0;
+        }
     }
 
     th {
         width: 20%;
+
+        @include media-sp($break-point_sp) {
+            width: 100px;
+        }
     }
 
     p:not(:last-child) {
@@ -113,8 +150,18 @@ img {
     height: 90px;
     padding: 30px 70px;
 
+    @include media-sp($break-point_sp) {
+        position: relative;
+        height: 60px;
+        padding: 20px;
+    }
+
     &__logo {
         line-height: 1;
+
+        @include media-sp($break-point_sp) {
+            width: 107px;
+        }
     }
 }
 
@@ -123,11 +170,32 @@ img {
 -----------------------*/
 .global-nav {
 
+    @include media-sp($break-point_sp) {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        width: 180px;
+        height: 100%;
+        background-color: $color_main;
+        box-shadow: -10px 0 35px -20px rgb(0 0 0 / 25%);
+    }
+
     &__list {
         display: flex;
         align-items: center;
         justify-content: center;
         column-gap: 30px;
+
+        @include media-sp($break-point_sp) {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 180px;
+            padding: 90px 20px 20px 50px;
+            row-gap: 25px;
+        }
     }
 
     &__item {
@@ -141,20 +209,109 @@ img {
         color: $color_text;
         text-decoration: none;
 
+        @include media-sp($break-point_sp) {
+            color: #ffffff;
+        }
+
         &:hover {
             color: $color_main;
+
+            @include media-sp($break-point_sp) {
+                color: #ffffff;
+            }
         }
 
         &--active {
             color: $color_main;
+
+            @include media-sp($break-point_sp) {
+                opacity: 0.6;
+            }
         }
     }
 }
 
-.button-menu {
+.btn-menu {
+    display: none;
 
+    @include media-sp($break-point_sp) {
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        padding: 21px 16px;
+        border: none;
+        outline: none;
+        background: none;
+        background-color: $color_main;
+        cursor: pointer;
+        appearance: none;
+    }
 }
 
+.btn-menu__line {
+    @include media-sp($break-point_sp) {
+        display: block;
+        position: relative;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        transition: all 0.4s;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+    &::before, &::after {
+        @include media-sp($break-point_sp){
+            display: block;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: inherit;
+            border-radius: 4px;
+            background-color: #fff;
+
+        }
+    }
+
+    &::before {
+        @include media-sp($break-point_sp) {
+            top: -8px;
+        }
+    }
+
+    &::after {
+        @include media-sp($break-point_sp) {
+            top: 8px;
+        }
+    }
+}
+
+.btn-menu.active {
+    .btn-menu__line {
+        background-color: transparent;
+
+        &::before, &::after {
+            top: 0;
+            background-color: #fff;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+}
 /*----------------------
 メインビジュアル
 -----------------------*/
@@ -168,6 +325,11 @@ img {
     background-position: center center;
     background-size: cover;
 
+    @include media-sp($break-point_sp) {
+        height: 460px;
+        background-image: url(../img/sp_mv.jpg);
+    }
+
     &__title-area {
         color: #ffffff;
         text-align: center;
@@ -179,12 +341,20 @@ img {
         line-height: 1;
         text-shadow: 0 4px 6px rgb(0 0 0 / 25%);
         margin-bottom: 10px;
+
+        @include media-sp($break-point_sp) {
+            font-size: 80px;
+        }
     }
 
     &__subtitle {
         font-size: 24px;
         line-height: 1;
         letter-spacing: 0.1em;
+
+        @include media-sp($break-point_sp) {
+            font-size: 20px;
+        }
     }
 }
 
@@ -192,9 +362,20 @@ img {
 ニュース
 -----------------------*/
 .news {
+
+    &__heading {
+        @include media-sp($break-point_sp) {
+            margin-bottom: 20px;
+        }
+    }
+
     &__inner {
         display: flex;
         column-gap: 90px;
+
+        @include media-sp($break-point_sp) {
+            display: block;
+        }
     }
 
     &__body {
@@ -223,15 +404,27 @@ img {
         &:hover {
             color: $color_main;
         }
+
+        @include media-sp($break-point_sp) {
+            flex-direction: column;
+        }
     }
 
     &__date {
         margin-right: 20px;
+
+        @include media-sp($break-point_sp) {
+            margin-right: 0;
+        }
     }
 
     &__title {
         font-size: 15px;
         line-height: 1.8;
+
+        @include media-sp($break-point_sp) {
+            line-height: 1.6;
+        }
     }
 }
 
@@ -242,6 +435,10 @@ img {
     &__heading {
         position: relative;
         margin-bottom: 50px;
+
+        @include media-sp($break-point_sp) {
+            margin-bottom: 20px;
+        }
 
         &::before {
             display: block;
@@ -254,6 +451,12 @@ img {
             font-weight: bold;
             line-height: 1;
             color: #f2f2f2;
+
+            @include media-sp($break-point_sp) {
+                top: -2px;
+                right: 30px;
+                font-size: 70px;
+            }
         }
     }
 }
@@ -263,34 +466,59 @@ img {
     column-gap: 30px;
     grid-template-columns: repeat(3, 1fr);
 
+    @include media-sp($break-point_sp) {
+        row-gap: 20px;
+        grid-template-columns: 1fr;
+    }
+
     &__item {
         padding: 50px;
         border-radius: 8px;
         background-color: #ffffff;
         box-shadow: 0 3px 21px rgb(0 0 0 / 0.16);
+
+        @include media-sp($break-point_sp) {
+            padding: 40px 30px;
+        }
     }
 
     &__image-wrapper {
         text-align: center;
         margin-bottom: 10px;
+
+        @include media-sp($break-point_sp) {
+            margin-bottom: 5px;
+        }
     }
 
     &__image {
         font-size: 48px;
         color: $color_main;
         vertical-align: bottom;
+
+        @include media-sp($break-point_sp) {
+            font-size: 60px;
+        }
     }
 
     &__title{
         font-size: 18px;
         font-weight: bold;
         text-align: center;
+
+        @include media-sp($break-point_sp) {
+            font-size: 16px;
+        }
     }
 
     &__description {
         font-size: 14px;
         line-height: 1.7;
         margin-top: 15px;
+
+        @include media-sp($break-point_sp) {
+            margin-top: 10px;
+        }
     }
 }
 
@@ -302,10 +530,15 @@ img {
     align-items: center;
     justify-content: center;
     height: 190px;
-    background-image: url("../img/pc_header.jpg");
+    background-image: url(../img/pc_header.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+
+    @include media-sp($break-point_sp) {
+        height: 160px;
+        background-image: url(../img/sp_header.jpg);
+    }
 
     &__title-area {
         color: #ffffff;
@@ -317,6 +550,10 @@ img {
         font-weight: bold;
         line-height: 1;
         letter-spacing: 0.1em;
+
+        @include media-sp($break-point_sp) {
+            font-size: 28px;
+        }
     }
 }
 
@@ -335,6 +572,11 @@ img {
         color: $color_main;
         text-align: center;
         margin-bottom: 20px;
+
+        @include media-sp($break-point_sp) {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
     }
 
     &__subtitle {
@@ -343,6 +585,11 @@ img {
         letter-spacing: 0.05em;
         text-align: center;
         margin-bottom: 40px;
+
+        @include media-sp($break-point_sp) {
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
     }
 }
 
@@ -351,6 +598,10 @@ img {
         width: 100px;
         margin: 0 25px 15px 0;
         float: left;
+
+        @include media-sp($break-point_sp) {
+            margin: 0 15px 10px 0;
+        }
     }
 
     &__image {
@@ -367,6 +618,13 @@ img {
     }
 }
 
+.office-image {
+    @include media-sp($break-point_sp) {
+        height: 260px;
+        object-fit: cover;
+    }
+}
+
 /*----------------------
 会社概要
 -----------------------*/
@@ -377,12 +635,21 @@ img {
 
     &__map iframe {
         height: 400px;
+
+        @include media-sp($break-point_sp) {
+            height: 300px;
+        }
     }
 
     &__map-link {
         font-size: 14px;
         text-align: right;
         margin-top: 20px;
+
+        @include media-sp($break-point_sp) {
+            font-size: 12px;
+            margin-top: 15px;
+        }
     }
 }
 
@@ -394,9 +661,17 @@ img {
     padding: 60px 20px 50px;
     background-color: $color_main;
 
+    @include media-sp($break-point_sp) {
+        padding: 40px 0 30px;
+    }
+
     &__copyright {
         font-size: 12px;
         letter-spacing: 0.03em;
+
+        @include media-sp($break-point_sp) {
+            font-size: 10px;
+        }
     }
 }
 
@@ -406,6 +681,10 @@ img {
     &__list {
         display: flex;
         column-gap: 30px;
+
+        @include media-sp($break-point_sp) {
+            column-gap: 25px;
+        }
     }
 
     &__item {
@@ -413,6 +692,10 @@ img {
         font-weight: bold;
         line-height: 1;
         letter-spacing: 0.05em;
+
+        @include media-sp($break-point_sp) {
+            font-size: 12px;
+        }
     }
 
     &__link {
